@@ -304,6 +304,47 @@
             display: none;
         }
         
+        /* 回顶部按钮样式 */
+        #backToTop {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        #backToTop:hover {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+        }
+        
+        #backToTop.show {
+            display: flex;
+        }
+        
+        @media (max-width: 768px) {
+            #backToTop {
+                bottom: 20px;
+                right: 20px;
+                width: 45px;
+                height: 45px;
+                font-size: 20px;
+            }
+        }
+        
         @media (max-width: 768px) {
             .container {
                 padding: 10px;
@@ -3112,6 +3153,9 @@
         </div>
     </div>
     
+    <!-- 回顶部按钮 -->
+    <button id="backToTop" title="回到顶部">⬆️</button>
+    
     <script>
         const searchInput = document.getElementById('searchInput');
         const menuContainer = document.getElementById('menuContainer');
@@ -3120,7 +3164,9 @@
         const noResults = document.getElementById('noResults');
         const searchInfo = document.getElementById('searchInfo');
         const categoryButtons = document.querySelectorAll('.category-btn');
+        const backToTopBtn = document.getElementById('backToTop');
         
+        // 搜索功能
         searchInput.addEventListener('input', function() {
             const keyword = this.value.toLowerCase().trim();
             let visibleCount = 0;
@@ -3157,18 +3203,21 @@
             }
         });
         
+        // 搜索框获得焦点时的提示
         searchInput.addEventListener('focus', function() {
             if (this.value === '') {
                 searchInfo.textContent = '💡 提示：输入菜品名称或价格进行搜索';
             }
         });
         
+        // 搜索框失去焦点时清除提示
         searchInput.addEventListener('blur', function() {
             if (this.value === '') {
                 searchInfo.textContent = '';
             }
         });
         
+        // 分类导航跳转功能
         function scrollToCategory(category) {
             const element = document.getElementById('category-' + category);
             if (element) {
@@ -3180,6 +3229,7 @@
             }
         }
         
+        // 监听滚动事件，更新活跃按钮和显示/隐藏回顶部按钮
         window.addEventListener('scroll', function() {
             let currentCategory = '';
             
@@ -3195,6 +3245,21 @@
                 if (btn.textContent === currentCategory) {
                     btn.classList.add('active');
                 }
+            });
+            
+            // 显示/隐藏回顶部按钮
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+        
+        // 回顶部按钮点击事件
+        backToTopBtn.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
             });
         });
     </script>
