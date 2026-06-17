@@ -33,12 +33,26 @@
             font-size: 2.5em;
         }
         
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+                padding: 10px;
+            }
+        }
+        
         .welcome {
             text-align: center;
             color: #e74c3c;
             font-size: 1.3em;
             font-weight: bold;
             margin-bottom: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .welcome {
+                font-size: 1em;
+                margin-bottom: 15px;
+            }
         }
         
         .stats {
@@ -48,7 +62,7 @@
         }
         
         .search-container {
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             display: flex;
             gap: 10px;
             justify-content: center;
@@ -87,8 +101,76 @@
             min-height: 20px;
         }
         
+        .category-nav {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow-x: auto;
+        }
+        
+        .category-nav-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .category-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .category-btn {
+            padding: 8px 16px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        
+        .category-btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .category-btn.active {
+            background: #e74c3c;
+            box-shadow: 0 4px 8px rgba(231, 76, 60, 0.3);
+        }
+        
+        @media (max-width: 768px) {
+            .category-nav {
+                padding: 10px;
+                margin-bottom: 20px;
+            }
+            
+            .category-nav-title {
+                font-size: 0.95em;
+                margin-bottom: 8px;
+            }
+            
+            .category-btn {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+            
+            .category-buttons {
+                gap: 6px;
+            }
+        }
+        
         .category-section {
             margin-bottom: 40px;
+            scroll-margin-top: 20px;
         }
         
         .category-title {
@@ -102,10 +184,32 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
         
+        @media (max-width: 768px) {
+            .category-title {
+                padding: 12px 15px;
+                font-size: 1.1em;
+                margin-bottom: 15px;
+            }
+        }
+        
         .menu-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .menu-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 12px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .menu-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
         }
         
         .menu-item {
@@ -133,8 +237,26 @@
             background-color: #f9f9f9;
         }
         
+        @media (max-width: 768px) {
+            .item-image {
+                height: 150px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .item-image {
+                height: 120px;
+            }
+        }
+        
         .item-details {
             padding: 15px;
+        }
+        
+        @media (max-width: 768px) {
+            .item-details {
+                padding: 10px;
+            }
         }
         
         .item-name {
@@ -150,11 +272,25 @@
             -webkit-box-orient: vertical;
         }
         
+        @media (max-width: 768px) {
+            .item-name {
+                font-size: 0.95em;
+                margin: 0 0 8px 0;
+                height: 2.4em;
+            }
+        }
+        
         .item-price {
             font-size: 1.2em;
             color: #e74c3c;
             font-weight: bold;
             margin: 0;
+        }
+        
+        @media (max-width: 768px) {
+            .item-price {
+                font-size: 1em;
+            }
         }
         
         .no-results {
@@ -166,6 +302,12 @@
         
         .category-section.hidden {
             display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
         }
     </style>
 </head>
@@ -194,9 +336,25 @@
         
         <div class="search-info" id="searchInfo"></div>
         
+        <div class="category-nav">
+            <div class="category-nav-title">📂 分类导航</div>
+            <div class="category-buttons" id="categoryButtons">
+                <button class="category-btn" onclick="scrollToCategory('中餐厅特色')">中餐厅特色</button>
+                <button class="category-btn" onclick="scrollToCategory('精品冷菜')">精品冷菜</button>
+                <button class="category-btn" onclick="scrollToCategory('活鲜海味')">活鲜海味</button>
+                <button class="category-btn" onclick="scrollToCategory('融合菜肴')">融合菜肴</button>
+                <button class="category-btn" onclick="scrollToCategory('绿叶时素')">绿叶时素</button>
+                <button class="category-btn" onclick="scrollToCategory('养生汤羹')">养生汤羹</button>
+                <button class="category-btn" onclick="scrollToCategory('主食餐点')">主食餐点</button>
+                <button class="category-btn" onclick="scrollToCategory('烧烤')">烧烤</button>
+                <button class="category-btn" onclick="scrollToCategory('饮品')">饮品</button>
+                <button class="category-btn" onclick="scrollToCategory('其他')">其他</button>
+            </div>
+        </div>
+        
         <div id="menuContainer">
 
-        <div class="category-section" data-category="中餐厅特色">
+        <div class="category-section" id="category-中餐厅特色" data-category="中餐厅特色">
             <div class="category-title">中餐厅特色</div>
             <div class="menu-grid">
 
@@ -280,7 +438,7 @@
             </div>
         </div>
 
-        <div class="category-section" data-category="精品冷菜">
+        <div class="category-section" id="category-精品冷菜" data-category="精品冷菜">
             <div class="category-title">精品冷菜</div>
             <div class="menu-grid">
 
@@ -525,7 +683,7 @@
             </div>
         </div>
 
-        <div class="category-section" data-category="活鲜海味">
+        <div class="category-section" id="category-活鲜海味" data-category="活鲜海味">
             <div class="category-title">活鲜海味</div>
             <div class="menu-grid">
 
@@ -910,7 +1068,7 @@
             </div>
         </div>
 
-        <div class="category-section" data-category="融合菜肴">
+        <div class="category-section" id="category-融合菜肴" data-category="融合菜肴">
             <div class="category-title">融合菜肴</div>
             <div class="menu-grid">
 
@@ -938,7 +1096,7 @@
             </div>
         </div>
 
-        <div class="category-section" data-category="绿叶时素">
+        <div class="category-section" id="category-绿叶时素" data-category="绿叶时素">
             <div class="category-title">绿叶时素</div>
             <div class="menu-grid">
 
@@ -980,7 +1138,7 @@
             </div>
         </div>
 
-        <div class="category-section" data-category="养生汤羹">
+        <div class="category-section" id="category-养生汤羹" data-category="养生汤羹">
             <div class="category-title">养生汤羹</div>
             <div class="menu-grid">
 
@@ -1113,7 +1271,7 @@
             </div>
         </div>
 
-        <div class="category-section" data-category="主食餐点">
+        <div class="category-section" id="category-主食餐点" data-category="主食餐点">
             <div class="category-title">主食餐点</div>
             <div class="menu-grid">
 
@@ -1239,7 +1397,7 @@
             </div>
         </div>
 
-        <div class="category-section" data-category="烧烤">
+        <div class="category-section" id="category-烧烤" data-category="烧烤">
             <div class="category-title">烧烤</div>
             <div class="menu-grid">
 
@@ -1330,7 +1488,7 @@
             </div>
         </div>
 
-        <div class="category-section" data-category="饮品">
+        <div class="category-section" id="category-饮品" data-category="饮品">
             <div class="category-title">饮品</div>
             <div class="menu-grid">
 
@@ -1393,7 +1551,7 @@
             </div>
         </div>
 
-        <div class="category-section" data-category="其他">
+        <div class="category-section" id="category-其他" data-category="其他">
             <div class="category-title">其他</div>
             <div class="menu-grid">
 
@@ -2961,6 +3119,7 @@
         const categorySection = menuContainer.querySelectorAll('.category-section');
         const noResults = document.getElementById('noResults');
         const searchInfo = document.getElementById('searchInfo');
+        const categoryButtons = document.querySelectorAll('.category-btn');
         
         searchInput.addEventListener('input', function() {
             const keyword = this.value.toLowerCase().trim();
@@ -3008,6 +3167,35 @@
             if (this.value === '') {
                 searchInfo.textContent = '';
             }
+        });
+        
+        function scrollToCategory(category) {
+            const element = document.getElementById('category-' + category);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                categoryButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                event.target.classList.add('active');
+            }
+        }
+        
+        window.addEventListener('scroll', function() {
+            let currentCategory = '';
+            
+            categorySection.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top <= 150) {
+                    currentCategory = section.getAttribute('data-category');
+                }
+            });
+            
+            categoryButtons.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent === currentCategory) {
+                    btn.classList.add('active');
+                }
+            });
         });
     </script>
 </body>
